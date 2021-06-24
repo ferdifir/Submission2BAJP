@@ -2,6 +2,7 @@ package com.example.jetpack2.mainview.content
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -25,6 +26,23 @@ class DetailActivity : AppCompatActivity() {
 
         setDetailFilm()
         showLoading(true)
+        setFilmFav()
+    }
+
+    private fun setFilmFav() {
+        var statusFav = false
+        toggle_favorite.setOnClickListener {
+            statusFav = !statusFav
+            if (statusFav) {
+                Toast.makeText(this,
+                    "this film has been added to film's favorite list",
+                    Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this,
+                    "this film has been removed from film's favorite list",
+                    Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun showLoading(state: Boolean) {

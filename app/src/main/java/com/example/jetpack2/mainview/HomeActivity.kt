@@ -29,7 +29,8 @@ class HomeActivity : AppCompatActivity() {
         @StringRes
         private val TAB_TITLES = intArrayOf(
             R.string.movie,
-            R.string.tv_show
+            R.string.tv_show,
+            R.string.fav_film
         )
     }
 

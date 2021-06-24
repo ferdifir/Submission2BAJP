@@ -14,6 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Jetpack2"
         tools:ignore="AllowBackup">
+        <activity
+            android:name=".mainview.TestActivity"
+            android:label="@string/title_activity_test"
+            android:theme="@style/Theme.Jetpack2.NoActionBar"></activity>
 
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"

@@ -17,4 +17,10 @@
     <style name="SplashScreenStyle" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_brand_logo</item>
     </style>
+
+    <style name="Theme.Jetpack2.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 </resources>

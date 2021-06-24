@@ -9,15 +9,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.jetpack2.R
 import com.example.jetpack2.data.model.FilmList
+import com.example.jetpack2.data.model.local.entity.MovieEntity
 import kotlinx.android.synthetic.main.item_list.view.*
 
 class MovieAdapter(private val context: Context?):
     RecyclerView.Adapter<MovieAdapter.ListViewHolder>() {
 
-    private var listMovies: List<FilmList> = emptyList()
+    private var listMovies: List<MovieEntity> = emptyList()
     private lateinit var onItemClickCallback: OnItemClickCallback
 
-    fun addList(movieModel: List<FilmList>){
+    fun addList(movieModel: List<MovieEntity>){
         this.listMovies = movieModel
         notifyDataSetChanged()
     }
@@ -36,10 +37,10 @@ class MovieAdapter(private val context: Context?):
     }
 
     inner class ListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        fun bindViewHolder(listMovies: FilmList) {
+        fun bindViewHolder(listMovies: MovieEntity) {
             with(itemView) {
-                tv_title.text = listMovies.title
-                tv_orgin.text = listMovies.vote_average.toString()
+                tv_title.text = listMovies.movie_title
+                tv_orgin.text = listMovies.movie_rating.toString()
                 Glide.with(context)
                     .load("https://image.tmdb.org/t/p/w500${listMovies.poster_path}")
                     .apply(RequestOptions().override(100, 150))
@@ -53,6 +54,6 @@ class MovieAdapter(private val context: Context?):
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: FilmList)
+        fun onItemClicked(data: MovieEntity)
     }
 }
