@@ -9,20 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jetpack2.R
-import com.example.jetpack2.adapter.MovieAdapter
-import com.example.jetpack2.data.model.FilmList
-import com.example.jetpack2.utils.Helper.TYPE_MOVIE
+import com.example.jetpack2.adapter.TvShowAdapter
+import com.example.jetpack2.data.model.local.entity.TvShowEntity
+import com.example.jetpack2.utils.Helper.TYPE_TVSHOW
 import com.example.jetpack2.viewmodel.FilmViewModel
 import com.example.jetpack2.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.fragment_movie.*
+import kotlinx.android.synthetic.main.fragment_tv_show.*
 
-class MovieFragment : Fragment(), MovieAdapter.OnItemClickCallback {
+class TvShowFragment : Fragment(), TvShowAdapter.OnItemClickCallback {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_movie, container, false)
+        return inflater.inflate(R.layout.fragment_tv_show, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,15 +31,15 @@ class MovieFragment : Fragment(), MovieAdapter.OnItemClickCallback {
         showLoading(true)
 
         val movieAdapter =
-            MovieAdapter(context)
+            TvShowAdapter(context)
 
         movieAdapter.setOnItemClickCallback(this)
-        movieViewModel?.movie?.observe(viewLifecycleOwner, {
+        movieViewModel?.tvShow?.observe(viewLifecycleOwner, {
             showLoading(false)
             movieAdapter.addList(it)
         })
 
-        rv_movie.apply {
+        rv_tvshow.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = movieAdapter
         }
@@ -48,22 +48,23 @@ class MovieFragment : Fragment(), MovieAdapter.OnItemClickCallback {
 
     private fun showLoading(state: Boolean) {
         if (state) {
-            pbMovie.visibility = View.VISIBLE
+            pbTvShow.visibility = View.VISIBLE
         } else {
-            pbMovie.visibility = View.GONE
+            pbTvShow.visibility = View.GONE
         }
     }
 
     private val movieViewModel by lazy {
-        val viewModelFactory = ViewModelFactory.getInstance()
+        val viewModelFactory = activity?.application?.let {
+            ViewModelFactory.getInstance(requireActivity().application)
+        }
         viewModelFactory?.let { ViewModelProvider(this, it).get(FilmViewModel::class.java) }
     }
 
-    override fun onItemClicked(data: FilmList) {
+    override fun onItemClicked(data: TvShowEntity) {
         startActivity(
             Intent(context, DetailActivity::class.java)
-                .putExtra(TYPE_MOVIE, data.id.toString())
+                .putExtra(TYPE_TVSHOW, data.tv_show_id)
         )
     }
-
 }
